@@ -4,7 +4,8 @@ include('conexion.php');
 
 // Verificar si se ha enviado el formulario por POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['nombre']) && !empty($_POST['nombre'])) {
+    if (isset($_POST['nombre']) && !empty($_POST['nombre'])) // Paso la variable nombre y además especificio que no está vacío
+    {
         $nombre = $_POST['nombre'];
 
         // Consultar los datos de la base de datos filtrados por nombre
