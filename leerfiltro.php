@@ -1,26 +1,59 @@
 <?php
 // Incluir el archivo de conexión (si es necesario)
 include('conexion.php');
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Estudiantes filtrado por nombre</title>
+    
+    <!-- Link al CSS de Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Listado de Estudiantes Filtrado</h2>
+
+        
+<?php
 
 // Verificar si se ha enviado el formulario por POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['nombre']) && !empty($_POST['nombre'])) // Paso la variable nombre y además especificio que no está vacío
-    {
+    if (isset($_POST['nombre']) && !empty($_POST['nombre'])) {
         $nombre = $_POST['nombre'];
 
         // Consultar los datos de la base de datos filtrados por nombre
-        $query = "SELECT id, nombre, edad, curso, promociona FROM alumnos WHERE nombre LIKE '%$nombre%'"; // Selecciona todo o los campos  // Si con el select empiezo con comillas dobles la variable le pongo comillas simple y al revés. 
-                                                                                                          // Si no imprime la variable.
-                                                                                                          // que me interesen de la tabla alumno, pero puede que me interese filtrar por ese nombre. 
-                                                                     // Preguntar mañana lo de las mayúsculas.                                     // Cuando pones Ana te sale Ana.
-        $resultado = mysqli_query($conexion, $query); // Angela recomienda activar buscar por mayúsculas y minúsculas para tener más nota.
-                                                                    // Se establece la consulta, ya que la variable query contiene la consulta y se almacena en $resultado.+
+        $query = "SELECT id, nombre, edad, curso, promociona FROM alumnos WHERE nombre LIKE '%$nombre%'";
+        $resultado = mysqli_query($conexion, $query);
 
         // Verificar si la consulta fue exitosa
-        if (!$resultado) {
-            die("Error en la consulta: " . mysqli_error($conexion));
+        if (mysqli_num_rows($resultado) == 0) {
+            //pngo un mensaje para explicar que no se ha encontrado
+            //un alumno con ese nombre.
+
+            //Le facilito un enlace al fichero de alta de alumnos, por si quiere introducirlo.
+
+            // Le puedo facilitar un enlace al fichero que muestra todos los alumnos.
+
+            // Añado un boton de volver para, que vuelva a la pagina de opciones.php.
+            ?>
+            <div class="card-body">
+                <div class="mb-3">
+                    <a href="#.php" class="btn btn-primary">Introducir alumnos</a>
+                </div>
+
+                <div class="mb-3">
+                    <a href="leerTodos.php" class="btn btn-primary">Ver alumnos</a>
+                </div>
+
+                <div class="mb-3">
+                    <a href="opciones.php" class="btn btn-primary">Volver</a>
+                </div>
+            </div>
+            <?php
         }
-        //Puedo poner lo que yo quiera, si la consulta no funciona, de momento dejamos mysqli.error
 
         // Mostrar los resultados en formato de tabla
         echo "<div class='container mt-4'>
@@ -38,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <tbody>";
 
         // Recorrer cada fila de resultados y mostrarla
-        while ($row = mysqli_fetch_assoc($resultado)) { // Con el mysqli_fetch_assoc coge las filas una por una y la va metiendo en la tabla o lo que haya. Si lo copiamos y pegamos el código de abajo no lo hace porque solo lo hace una vez, para hacerlo 2 veces tenemos que lanzar la variable $resultado y hacer otra vez la línea:  $resultado = mysqli_query($conexion, $query);
-            echo "<tr>                                          
+        while ($row = mysqli_fetch_assoc($resultado)) {
+            echo "<tr>
                     <td>" . $row['id'] . "</td>
                     <td>" . $row['nombre'] . "</td>
                     <td>" . $row['edad'] . "</td>
@@ -61,3 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 ?>
+<!-- Scripts de Bootstrap -->
+     <!-- Agregar el script de Bootstrap 5 desde el CDN al final del body -->
+     <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
