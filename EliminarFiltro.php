@@ -7,25 +7,25 @@ include('conexion.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Estudiantes filtrado por nombre</title>
+    <title>Alumno eliminado</title>
     
     <!-- Link al CSS de Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-4">
-        <h2 class="text-center mb-4">Listado de Estudiantes Filtrado</h2>
+        <h2 class="text-center mb-4">Listado de Estudiantes Después de Eliminar</h2>
 
         
 <?php
 
 // Verificar si se ha enviado el formulario por POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['nombre']) && !empty($_POST['nombre'])) {
-        $nombre = $_POST['nombre'];
+    if (isset($_POST['id']) && !empty($_POST['id'])) {
+        $id = $_POST['id'];
 
-        // Consultar los datos de la base de datos filtrados por nombre
-        $query = "SELECT id, nombre, edad, curso, promociona FROM alumnos WHERE nombre LIKE '%$nombre%'";
+        // Verificar que existe el ID
+        $query = "SELECT count(id) FROM alumnos WHERE id='$id'";
         $resultado = mysqli_query($conexion, $query);
 
         // Verificar si la consulta fue exitosa
