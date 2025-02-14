@@ -1,0 +1,85 @@
+/* Configuración general */
+body {
+    font-family: "Georgia", serif; /* Fuente más clásica */
+    background-image: url('ecija.jpg'); /* Asegúrate de que el archivo está en la misma carpeta */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #4a3f35; /* Marrón oscuro, clásico */
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilizar el título */
+h2 {
+    background: rgba(255, 255, 255, 0.8);
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #6a1b9a; /* Morado Semana Santa */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+/* Estilizar la tabla */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: rgba(255, 248, 220, 0.9); /* Beige/dorado tenue */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Encabezados de la tabla */
+th {
+    background: #d4af37; /* Dorado */
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+}
+
+/* Filas de la tabla */
+td {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    color: #4a3f35;
+}
+
+/* Alternar colores de filas */
+tr:nth-child(even) {
+    background: rgba(230, 230, 250, 0.7); /* Lavanda claro */
+}
+
+tr:nth-child(odd) {
+    background: rgba(245, 245, 245, 0.9); /* Blanco humo */
+}
+
+/* Efecto hover */
+tr:hover {
+    background: rgba(210, 180, 140, 0.6); /* Marrón claro (tono cálido) */
+    cursor: pointer;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    table {
+        width: 95%;
+    }
+    
+    h2 {
+        font-size: 24px;
+        padding: 10px 20px;
+    }
+    
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
