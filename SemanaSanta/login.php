@@ -1,24 +1,25 @@
 <?php
 session_start();
-include('conexion.php'); // Conexión a la base de datos
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $usuario = mysqli_real_escape_string($conexion, $_POST['usuario']);
-    $password = mysqli_real_escape_string($conexion, $_POST['password']); // Se compara directamente
+// Eliminar cualquier sesión activa
+session_unset(); // Elimina todas las variables de sesión
+session_destroy(); // Destruye la sesión
 
-    $query = "SELECT * FROM usuarios WHERE usuario='$usuario' AND password='$password'";
-    $resultado = mysqli_query($conexion, $query);
+// Si el formulario se envió
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Recibe los datos del formulario
+    $usuario = $_POST['usuario'];
+    $password = $_POST['password'];
 
-    if (!$resultado) {
-        die("Error en la consulta: " . mysqli_error($conexion)); // Muestra errores de SQL
-    }
-
-    if (mysqli_num_rows($resultado) == 1) {
+    // Verifica si el usuario y la contraseña son correctos
+    if ($usuario === 'admin' && $password === '1234') {
+        // Si son correctos, guarda el nombre de usuario en la sesión y redirige a leerDatos.php
         $_SESSION['usuario'] = $usuario;
-        header("Location: leerDatos.php"); // Redirige tras el login
+        header("Location: leerDatos.php"); // Redirige a leerDatos.php
         exit();
     } else {
-        $error = "Usuario o contraseña incorrectos";
+        // Si son incorrectos, muestra un mensaje de error
+        $error_message = "Usuario o contraseña incorrectos";
     }
 }
 ?>
@@ -29,25 +30,111 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Ruta completa a tu archivo CSS local -->
+    <link rel="stylesheet" href="C:/xampp/htdocs/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/css/style.css">
+
+    <!-- Bootstrap CSS desde el servidor local -->
+    <link rel="stylesheet" href="/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/css/bootstrap.min.css">
+
+    <!-- Aquí añadimos las fuentes locales con la ruta correcta -->
+    <style>
+        /* Fuentes locales usando @font-face */
+        @font-face {
+            font-family: 'Roboto';
+            src: url('C:/xampp/htdocs/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/fonts/Roboto-Regular.woff2') format('woff2'),
+                 url('C:/xampp/htdocs/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/fonts/Roboto-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Roboto';
+            src: url('C:/xampp/htdocs/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/fonts/Roboto-Bold.woff2') format('woff2'),
+                 url('C:/xampp/htdocs/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/fonts/Roboto-Bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
 </head>
-<body class="bg-light">
-    <div class="container d-flex justify-content-center align-items-center vh-100">
-        <div class="card p-4 shadow-lg" style="width: 22rem;">
-            <h3 class="text-center">Iniciar sesión</h3>
-            <?php if (isset($error)) { echo "<p class='text-danger text-center'>$error</p>"; } ?>
-            <form method="POST" action="">
-                <div class="mb-3">
-                    <label for="usuario" class="form-label">Usuario</label>
-                    <input type="text" class="form-control" name="usuario" required>
+<body>
+
+<div class="content d-flex align-items-center" style="min-height: 100vh;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- Columna para la imagen -->
+            <div class="col-md-6">
+                <img src="login-form-07/login.jpg" alt="Imagen" class="img-fluid">
+            </div>
+
+            <!-- Columna para el formulario -->
+            <div class="col-md-6 contents">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="mb-4">
+                            <h3>Iniciar Sesión</h3>
+                            <p class="mb-4">Accede a tu cuenta con tus credenciales</p>
+                        </div>
+
+                        <!-- Mostrar mensaje de error si la validación falla -->
+                        <?php if (isset($error_message)): ?>
+                            <div class="alert alert-danger">
+                                <?php echo $error_message; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <form action="login.php" method="POST">
+                            <!-- Campo Usuario -->
+                            <div class="form-group first">
+                                <label for="usuario">Usuario</label>
+                                <input type="text" class="form-control" id="usuario" name="usuario" required>
+                            </div>
+
+                            <!-- Campo Contraseña -->
+                            <div class="form-group last mb-4">
+                                <label for="password">Contraseña</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+
+                            <!-- Recordar contraseña -->
+                            <div class="d-flex mb-5 align-items-center">
+                                <label class="control control--checkbox mb-0"><span class="caption">Recordarme</span>
+                                    <input type="checkbox" checked="checked"/>
+                                    <div class="control__indicator"></div>
+                                </label>
+                                <span class="ml-auto"><a href="#" class="forgot-pass">¿Olvidaste tu contraseña?</a></span> 
+                            </div>
+
+                            <!-- Botón de Ingreso -->
+                            <input type="submit" value="Ingresar" class="btn btn-block btn-primary">
+
+                            <!-- Redes sociales -->
+                            <span class="d-block text-left my-4 text-muted">&mdash; o ingresa con &mdash;</span>
+                            <div class="social-login">
+                                <a href="#" class="facebook">
+                                    <span class="icon-facebook mr-3"></span> 
+                                </a>
+                                <a href="#" class="twitter">
+                                    <span class="icon-twitter mr-3"></span> 
+                                </a>
+                                <a href="#" class="google">
+                                    <span class="icon-google mr-3"></span> 
+                                </a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Entrar</button>
-            </form>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- Bootstrap JS desde el servidor local -->
+<script src="/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
