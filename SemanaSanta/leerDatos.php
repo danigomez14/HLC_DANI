@@ -1,13 +1,13 @@
 <?php
-// Incluir el archivo de conexión
+// Incluir la conexión a la base de datos
 include('conexion.php'); 
 
-// Verificar si la conexión está establecida
+// Verificar la conexión
 if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
-// Consulta para obtener los datos de las hermandades
+// Obtener hermandades
 $query = "SELECT id, nombre, dia FROM hermandades";
 $resultado = mysqli_query($conexion, $query);
 
@@ -22,13 +22,13 @@ if (!$resultado) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Hermandades</title>
-    <link rel="stylesheet" href="estilo.css"> <!-- Enlace al archivo CSS -->
+    <title>Hermandades</title>
+    <link rel="stylesheet" href="estilo.css"> 
 </head>
 <body>
 
 <h2>Listado de Hermandades</h2>
-<table border="1">xa
+<table border="1">
     <tr>
         <th>ID</th>
         <th>Nombre</th>
@@ -36,21 +36,17 @@ if (!$resultado) {
     </tr>
 
     <?php
-    // Recorrer los resultados
     while ($row = mysqli_fetch_assoc($resultado)) {
         echo "<tr>
                 <td>{$row['id']}</td>
-                <td>{$row['nombre']}</td>
+                <td><a href='redirigir.php?id={$row['id']}' style='text-decoration: none; color: blue;'>{$row['nombre']}</a></td>
                 <td>{$row['dia']}</td>
               </tr>";
     }
     ?>
 </table>
 
-<?php
-// Cerrar la conexión
-mysqli_close($conexion);
-?>
+<?php mysqli_close($conexion); ?>
 
 </body>
 </html>
