@@ -24,8 +24,29 @@ if (!$resultado) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hermandades</title>
     <link rel="stylesheet" href="estilo.css"> 
+    <style>
+        .btn-guardar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-guardar:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
+
+<!-- Botón para redirigir a guardarDetalles.php -->
+<a href="guardarDetalles.php" class="btn-guardar">Ir a Guardar Detalles</a>
 
 <h2>Listado de Hermandades</h2>
 <table border="1">

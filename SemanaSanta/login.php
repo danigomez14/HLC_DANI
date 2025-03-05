@@ -2,8 +2,9 @@
 session_start();
 
 // Eliminar cualquier sesión activa
-session_unset(); // Elimina todas las variables de sesión
-session_destroy(); // Destruye la sesión
+session_unset(); 
+session_destroy();
+session_start(); // Reiniciar la sesión después de destruirla
 
 // Si el formulario se envió
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -11,14 +12,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
 
-    // Verifica si el usuario y la contraseña son correctos
-    if ($usuario === 'admin' && $password === '1234') {
+    // Contraseña almacenada en MD5 (hash de "1234")
+    $passwordHash = md5(string: "1234");
+    $passwordUser = md5(string: "consejo");
+    
+    // Verifica si el usuario es 'admin' o 'consejo' y la contraseña es correcta
+    if ($usuario === 'admin' && md5($password) === $passwordHash) {
         // Si son correctos, guarda el nombre de usuario en la sesión y redirige a leerDatos.php
         $_SESSION['usuario'] = $usuario;
-        header("Location: leerDatos.php"); // Redirige a leerDatos.php
+        header("Location: leerDatos.php"); // Redirige a leerDatos.php para el usuario admin
+        exit();
+    } elseif ($usuario === 'consejo' && md5($password) === $passwordUser) {
+        // Si el usuario es 'consejo', redirige a guardarDetalles.php
+        $_SESSION['usuario'] = $usuario;
+        header("Location: guardarDetalles.php"); // Redirige a guardarDetalles.php para el usuario consejo
         exit();
     } else {
-        // Si son incorrectos, muestra un mensaje de error
+        // Si las credenciales son incorrectas
         $error_message = "Usuario o contraseña incorrectos";
     }
 }
@@ -37,9 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Bootstrap CSS desde el servidor local -->
     <link rel="stylesheet" href="/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/css/bootstrap.min.css">
 
-    <!-- Aquí añadimos las fuentes locales con la ruta correcta -->
     <style>
-        /* Fuentes locales usando @font-face */
         @font-face {
             font-family: 'Roboto';
             src: url('C:/xampp/htdocs/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/fonts/Roboto-Regular.woff2') format('woff2'),
@@ -66,12 +74,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="content d-flex align-items-center" style="min-height: 100vh;">
     <div class="container">
         <div class="row justify-content-center">
-            <!-- Columna para la imagen -->
             <div class="col-md-6">
                 <img src="login-form-07/login.jpg" alt="Imagen" class="img-fluid">
             </div>
 
-            <!-- Columna para el formulario -->
             <div class="col-md-6 contents">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
@@ -80,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <p class="mb-4">Accede a tu cuenta con tus credenciales</p>
                         </div>
 
-                        <!-- Mostrar mensaje de error si la validación falla -->
                         <?php if (isset($error_message)): ?>
                             <div class="alert alert-danger">
                                 <?php echo $error_message; ?>
@@ -88,19 +93,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php endif; ?>
 
                         <form action="login.php" method="POST">
-                            <!-- Campo Usuario -->
                             <div class="form-group first">
                                 <label for="usuario">Usuario</label>
                                 <input type="text" class="form-control" id="usuario" name="usuario" required>
                             </div>
 
-                            <!-- Campo Contraseña -->
                             <div class="form-group last mb-4">
                                 <label for="password">Contraseña</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
 
-                            <!-- Recordar contraseña -->
                             <div class="d-flex mb-5 align-items-center">
                                 <label class="control control--checkbox mb-0"><span class="caption">Recordarme</span>
                                     <input type="checkbox" checked="checked"/>
@@ -109,10 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <span class="ml-auto"><a href="#" class="forgot-pass">¿Olvidaste tu contraseña?</a></span> 
                             </div>
 
-                            <!-- Botón de Ingreso -->
                             <input type="submit" value="Ingresar" class="btn btn-block btn-primary">
 
-                            <!-- Redes sociales -->
                             <span class="d-block text-left my-4 text-muted">&mdash; o ingresa con &mdash;</span>
                             <div class="social-login">
                                 <a href="#" class="facebook">
@@ -133,7 +133,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </div>
 
-<!-- Bootstrap JS desde el servidor local -->
 <script src="/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/js/bootstrap.bundle.min.js"></script>
 
 </body>

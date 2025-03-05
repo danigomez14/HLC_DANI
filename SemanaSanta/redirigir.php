@@ -2,7 +2,7 @@
 // Incluir la conexión a la base de datos
 include('conexion.php'); 
 
-// Verificar si se recibe el ID
+// Verificar si se recibe el ID de la hermandad
 if (!isset($_GET['id'])) {
     die("Error: No se ha proporcionado un ID de hermandad.");
 }
@@ -26,18 +26,19 @@ if (!file_exists($rutaimagen)) {
     $rutaimagen = "imagenes/default.jpg";
 }
 
-// Procesar el formulario
+// Procesar el formulario cuando se envían datos
 $mensaje = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $recorrido = mysqli_real_escape_string($conexion, $_POST['recorrido']);
     $nazarenos = intval($_POST['nazarenos']);
     $banda = mysqli_real_escape_string($conexion, $_POST['banda']);
 
-    $queryinsert = "INSERT INTO detalles_hermandades (id_hermandad, recorrido, nazarenos, banda) 
+    // Insertar los datos en la base de datos
+    $queryinsert = "INSERT INTO detalles_hermandades (hermandad_id, recorrido, nazarenos, banda) 
                     VALUES ('$idhermandad', '$recorrido', '$nazarenos', '$banda')";
 
     if (mysqli_query($conexion, $queryinsert)) {
-        $mensaje = "Detalles añadidos correctamente.";
+        $mensaje = "Datos introducidos correctamente.";
     } else {
         $mensaje = "Error al guardar los detalles: " . mysqli_error($conexion);
     }
@@ -60,17 +61,18 @@ mysqli_close($conexion);
 <div class="container vh-100 d-flex justify-content-center align-items-center">
     <div class="shadow bg-white rounded p-4 w-100" style="max-width: 900px;">
         <div class="row align-items-center">
-            <!-- Imagen a la izquierda -->
+            <!-- Imagen de la hermandad -->
             <div class="col-md-4 text-center">
                 <img src="<?php echo $rutaimagen; ?>" alt="Imagen de la hermandad" class="img-fluid rounded">
             </div>
 
-            <!-- Texto y formulario a la derecha -->
+            <!-- Formulario de detalles -->
             <div class="col-md-8">
                 <h2 class="fw-bold"><?php echo htmlspecialchars($nombrehermandad); ?></h2>
 
+                <!-- Mensaje de éxito o error -->
                 <?php if (!empty($mensaje)) { ?>
-                    <div class='alert alert-success text-center'><?php echo $mensaje; ?></div>
+                    <div class="alert alert-success text-center"><?php echo $mensaje; ?></div>
                 <?php } ?>
 
                 <form method="POST">
