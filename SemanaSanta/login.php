@@ -1,34 +1,43 @@
 <?php
 session_start();
 
-// Eliminar cualquier sesión activa
-session_unset(); 
-session_destroy();
-session_start(); // Reiniciar la sesión después de destruirla
+// Verificar si ya existe una cookie y autocompletar el usuario
+$usuario_guardado = isset($_COOKIE['usuario']) ? $_COOKIE['usuario'] : "";
 
 // Si el formulario se envió
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Recibe los datos del formulario
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
+    $recordar = isset($_POST['recordar']);
 
-    // Contraseña almacenada en MD5 (hash de "1234")
-    $passwordHash = md5(string: "1234");
-    $passwordUser = md5(string: "consejo");
-    
-    // Verifica si el usuario es 'admin' o 'consejo' y la contraseña es correcta
+    // Contraseñas almacenadas en hash MD5
+    $passwordHash = md5("1234");
+    $passwordUser = md5("consejo");
+
     if ($usuario === 'admin' && md5($password) === $passwordHash) {
-        // Si son correctos, guarda el nombre de usuario en la sesión y redirige a leerDatos.php
         $_SESSION['usuario'] = $usuario;
-        header("Location: leerDatos.php"); // Redirige a leerDatos.php para el usuario admin
+
+        // Guardar cookie si el usuario marcó "Recordarme"
+        if ($recordar) {
+            setcookie("usuario", $usuario, time() + (30 * 24 * 60 * 60), "/"); // 30 días
+        } else {
+            setcookie("usuario", "", time() - 3600, "/"); // Eliminar cookie
+        }
+
+        header("Location: leerDatos.php");
         exit();
     } elseif ($usuario === 'consejo' && md5($password) === $passwordUser) {
-        // Si el usuario es 'consejo', redirige a guardarDetalles.php
         $_SESSION['usuario'] = $usuario;
-        header("Location: guardarDetalles.php"); // Redirige a guardarDetalles.php para el usuario consejo
+
+        if ($recordar) {
+            setcookie("usuario", $usuario, time() + (30 * 24 * 60 * 60), "/");
+        } else {
+            setcookie("usuario", "", time() - 3600, "/");
+        }
+
+        header("Location: guardarDetalles.php");
         exit();
     } else {
-        // Si las credenciales son incorrectas
         $error_message = "Usuario o contraseña incorrectos";
     }
 }
@@ -40,13 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-
-    <!-- Ruta completa a tu archivo CSS local -->
     <link rel="stylesheet" href="C:/xampp/htdocs/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/css/style.css">
-
-    <!-- Bootstrap CSS desde el servidor local -->
     <link rel="stylesheet" href="/dashboard/hlc_2425/HLC_DANI/HLC_DANI-1/SemanaSanta/login-form-07/css/bootstrap.min.css">
-
     <style>
         @font-face {
             font-family: 'Roboto';
@@ -95,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <form action="login.php" method="POST">
                             <div class="form-group first">
                                 <label for="usuario">Usuario</label>
-                                <input type="text" class="form-control" id="usuario" name="usuario" required>
+                                <input type="text" class="form-control" id="usuario" name="usuario" value="<?= htmlspecialchars($usuario_guardado); ?>" required>
                             </div>
 
                             <div class="form-group last mb-4">
@@ -104,8 +108,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
 
                             <div class="d-flex mb-5 align-items-center">
-                                <label class="control control--checkbox mb-0"><span class="caption">Recordarme</span>
-                                    <input type="checkbox" checked="checked"/>
+                                <label class="control control--checkbox mb-0">
+                                    <span class="caption">Recordarme</span>
+                                    <input type="checkbox" name="recordar" <?= $usuario_guardado ? 'checked' : ''; ?>/>
                                     <div class="control__indicator"></div>
                                 </label>
                                 <span class="ml-auto"><a href="#" class="forgot-pass">¿Olvidaste tu contraseña?</a></span> 

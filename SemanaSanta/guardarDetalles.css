@@ -1,0 +1,12 @@
+/* guardarDetalles.css */
+body {
+    background-color: #ee9f8e; /* Color de fondo muy claro (Alice Blue) */
+}
+
+.container {
+    background-color: #ee9f8e; /* Fondo blanco para la caja central */
+}
+
+.shadow {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ligera sombra para darle profundidad */
+}
