@@ -1,12 +1,93 @@
-/* guardarDetalles.css */
-body {
-    background-color: #ee9f8e; /* Color de fondo muy claro (Alice Blue) */
-}
-
+/* Configuración del fondo del contenedor de selección de hermandad */
 .container {
-    background-color: #ee9f8e; /* Fondo blanco para la caja central */
+    background-color: white; /* Fondo blanco completo para el contenedor */
+    background-image: url('consejo.jpg'); /* Ruta de la imagen de fondo */
+    background-size: 50%; /* Ajustar el tamaño de la imagen al 50% de su tamaño original */
+    background-position: center; /* Centrar la imagen */
+    background-repeat: no-repeat; /* Evitar que la imagen se repita */
+    background-attachment: fixed; /* Fijar la imagen al fondo del contenedor */
+    padding: 20px;
+    margin: 50px auto;
+    max-width: 800px;
+    border-radius: 10px; /* Bordes redondeados (puedes eliminar si no los quieres) */
+    box-shadow: none; /* Eliminar la sombra */
+    text-align: center;
 }
 
+/* Fondo del body para que no tenga imagen */
+body {
+    background-color: #f0f0f0; /* Fondo suave y neutro */
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Sombra para las tarjetas (si no quieres que las tarjetas tengan sombra, elimina o comenta la siguiente parte) */
+.card {
+    background-color: #ffffff; /* Fondo blanco para la tarjeta */
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: none; /* Eliminar la sombra */
+}
+
+/* Estilos de los campos de entrada */
+input[type="text"], input[type="number"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Botones */
+button, .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+button[type="submit"] {
+    background-color: #28a745; /* Verde */
+}
+
+button[type="submit"]:hover {
+    background-color: #218838; /* Verde más oscuro */
+}
+
+.btn-secondary {
+    background-color: #6c757d; /* Gris oscuro */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Gris más oscuro */
+}
+
+/* Mensajes de éxito o error */
+.alert {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: #28a745; /* Verde de éxito */
+    color: white;
+}
+
+.alert-error {
+    background-color: #dc3545; /* Rojo de error */
+    color: white;
+}
+
+/* Sombra ligera */
 .shadow {
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ligera sombra para darle profundidad */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Eliminar la sombra si no la quieres */
 }

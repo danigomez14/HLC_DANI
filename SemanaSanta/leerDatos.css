@@ -52,20 +52,11 @@ h2 {
 
 /* Estilo para el botón Editar */
 .btn-editar {
-    background-color: #111f09; /* Azul */
+    background-color: #28a745; /* Verde */
 }
 
 .btn-editar:hover {
-    background-color: #0056b3; /* Azul más oscuro */
-}
-
-/* Estilo para el botón Eliminar */
-.btn-danger {
-    background-color: #e74c3c;
-}
-
-.btn-danger:hover {
-    background-color: #c0392b;
+    background-color: #218838; /* Verde más oscuro */
 }
 
 table {
@@ -102,4 +93,12 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
 }
