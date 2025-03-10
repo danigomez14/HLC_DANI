@@ -113,23 +113,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <input type="checkbox" name="recordar" <?= $usuario_guardado ? 'checked' : ''; ?>/>
                                     <div class="control__indicator"></div>
                                 </label>
-                                <span class="ml-auto"><a href="#" class="forgot-pass">¿Olvidaste tu contraseña?</a></span> 
                             </div>
 
                             <input type="submit" value="Ingresar" class="btn btn-block btn-primary">
-
-                            <span class="d-block text-left my-4 text-muted">&mdash; o ingresa con &mdash;</span>
-                            <div class="social-login">
-                                <a href="#" class="facebook">
-                                    <span class="icon-facebook mr-3"></span> 
-                                </a>
-                                <a href="#" class="twitter">
-                                    <span class="icon-twitter mr-3"></span> 
-                                </a>
-                                <a href="#" class="google">
-                                    <span class="icon-google mr-3"></span> 
-                                </a>
-                            </div>
                         </form>
                     </div>
                 </div>
