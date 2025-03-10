@@ -74,6 +74,10 @@ if (!$resultado) {
                     <td><a href='redirigir.php?id={$row['id']}'>{$row['nombre']}</a></td>
                     <td>{$row['dia']}</td>
                     <td>
+                        <!-- Botón de Editar -->
+                        <a href='editarHdad.php?id={$row['id']}' class='btn btn-editar'>Editar</a>
+                        
+                        <!-- Botón de Eliminar -->
                         <form method='POST' action='' style='display:inline-block;'>
                             <input type='hidden' name='eliminar_detalles_id' value='{$row['id']}'>
                             <button type='submit' class='btn btn-danger' onclick='return confirm(\"¿Estás seguro de que deseas eliminar los detalles de esta hermandad?\")'>Eliminar Detalles</button>
