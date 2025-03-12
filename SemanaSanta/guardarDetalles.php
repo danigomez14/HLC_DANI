@@ -79,13 +79,12 @@ mysqli_close($conexion);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles de la Hermandad</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Enlace al archivo CSS -->
     <link rel="stylesheet" href="guardarDetalles.css">
 </head>
 <body>
 
-<div class="container vh-100 d-flex justify-content-center align-items-center">
-    <div class="shadow bg-white rounded p-4 w-100" style="max-width: 900px;">
+<div class="container mt-5">
+    <div class="shadow bg-white rounded p-4">
         <?php if (!$hermandad_id) { ?>
             <h2 class="text-center">Selecciona una Hermandad</h2>
             <form method="POST">
@@ -114,7 +113,7 @@ mysqli_close($conexion);
                     <img src="<?php echo $rutaimagen; ?>" alt="Imagen de la hermandad" class="img-fluid rounded" style="max-width: 150px;">
                 </div>
                 <div class="col-md-8">
-                    <h2 class="fw-bold"><?php echo htmlspecialchars($nombrehermandad); ?></h2>
+                    <h2 class="fw-bold text-break"><?php echo htmlspecialchars($nombrehermandad); ?></h2>
                     <?php if (!empty($mensaje)) { ?>
                         <div class="alert alert-info text-center"><?php echo $mensaje; ?></div>
                     <?php } ?>
@@ -176,3 +175,4 @@ mysqli_close($conexion);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
